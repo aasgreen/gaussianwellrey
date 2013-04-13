@@ -1,0 +1,14 @@
+This directory contains the code I have generated while working for the Rey group.
+
+Primarily, I am looking at two gaussian wells; using mathematica to solve and generated matrices in the plane wave and harmonic oscillator basis.
+
+Results: Convergence contains the majority of the 1D code.
+
+2d: contains the beginning of the investigation into 2d
+
+2dfork is a notebook produced for kaden, but has taken over prominance
+
+Double well: is Adam (other adam's) code for generating this tunneling rates
+
+Onside: I have started to look at plotting on the onsite interaction.
+
