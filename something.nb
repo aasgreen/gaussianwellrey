@@ -1,0 +1,359 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     10396,        349]
+NotebookOptionsPosition[      9455,        312]
+NotebookOutlinePosition[      9794,        327]
+CellTagsIndexPosition[      9751,        324]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["\<\
+Using my new sparse matrices, hopefully we will get more resolution in 2D. \
+For a testing of the 2D, 1Well, look at notebook sparsematrix. I am building \
+the 2D-2Well case now.
+\
+\>", "Text",
+ CellChangeTimes->{{3.572126264989007*^9, 3.572126310221249*^9}, {
+  3.57212664444764*^9, 3.5721266724156733`*^9}}],
+
+Cell["\<\
+2D-1Well
+\
+\>", "Section",
+ CellChangeTimes->{{3.5721263156936693`*^9, 3.572126320269031*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Functions:", "Section",
+ CellChangeTimes->{{3.572126333613285*^9, 3.572126335261198*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"R", "[", 
+   RowBox[{"deltaK_", ",", "L_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"R", "[", "deltaK", "]"}], "=", 
+   RowBox[{
+    RowBox[{"Exp", "[", 
+     FractionBox[
+      RowBox[{
+       RowBox[{"-", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{"2", "*", 
+           FractionBox["\[Pi]", "L"]}], ")"}], "2"]}], 
+       SuperscriptBox[
+        RowBox[{"(", "deltaK", ")"}], "2"]}], "8."], "]"}], "//", 
+    "N"}]}]}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"yIndex", "[", 
+   RowBox[{"i_", ",", "size_"}], "]"}], " ", "=", 
+  RowBox[{"Mod", "[", 
+   RowBox[{"i", ",", "size", ",", "1"}], "]"}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"Mod", "[", 
+  RowBox[{"i", ",", "size", ",", "1"}], "]"}]], "Output",
+ CellChangeTimes->{3.572126354428051*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"xIndex", "[", 
+   RowBox[{"i_", ",", "size_"}], "]"}], "=", 
+  RowBox[{
+   FractionBox[
+    RowBox[{"(", 
+     RowBox[{"i", "-", 
+      RowBox[{"Mod", "[", 
+       RowBox[{"i", ",", "size", ",", "1"}], "]"}]}], ")"}], "size"], "+", 
+   "1"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"For", " ", "the", " ", "index", " ", "functions"}], ",", " ", 
+    "remember", ",", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"we", " ", "know", " ", "that", " ", 
+       RowBox[{"(", "size", ")"}], "*", 
+       RowBox[{"(", 
+        RowBox[{"xIndex", "-", "1"}], ")"}]}], "+", "yIndex"}], " ", 
+     "\[Equal]", " ", 
+     RowBox[{"1", "D", " ", "array", " ", 
+      RowBox[{"index", ".", " ", "M"}], " ", "starts", " ", "at", " ", 
+      "1"}]}]}], "*)"}]}]}], "Input",
+ CellChangeTimes->{{3.572126419148222*^9, 3.572126519619625*^9}}],
+
+Cell[BoxData[
+ RowBox[{"1", "+", 
+  FractionBox[
+   RowBox[{"i", "-", 
+    RowBox[{"Mod", "[", 
+     RowBox[{"i", ",", "size", ",", "1"}], "]"}]}], "size"]}]], "Output",
+ CellChangeTimes->{3.572126380486183*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ky", "[", 
+   RowBox[{"i_", ",", "size_"}], "]"}], "=", 
+  RowBox[{
+   RowBox[{"yIndex", "[", 
+    RowBox[{"i", ",", "size"}], "]"}], "-", 
+   FractionBox[
+    RowBox[{"(", 
+     RowBox[{"size", "-", "1"}], ")"}], "2"], "-", "1"}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "1"}], "+", 
+  FractionBox[
+   RowBox[{"1", "-", "size"}], "2"], "+", 
+  RowBox[{"Mod", "[", 
+   RowBox[{"i", ",", "size", ",", "1"}], "]"}]}]], "Output",
+ CellChangeTimes->{3.572126360415779*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"kx", "[", 
+   RowBox[{"i_", ",", "size_"}], "]"}], "=", 
+  RowBox[{
+   RowBox[{"xIndex", "[", 
+    RowBox[{"i", ",", "size"}], "]"}], "-", 
+   FractionBox[
+    RowBox[{"(", 
+     RowBox[{"size", "-", "1"}], ")"}], "2"], "-", "1"}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "1"}], "+", 
+  FractionBox[
+   RowBox[{"1", "-", "size"}], "2"], "+", 
+  RowBox[{"xIndex", "[", 
+   RowBox[{"i", ",", "size"}], "]"}]}]], "Output",
+ CellChangeTimes->{3.572126367709126*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"BuildPlaneMatrix", "[", 
+   RowBox[{"V_", ",", "L_", ",", "p_"}], "]"}], ":=", " ", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"MDense", ",", "MDiag", ",", "i", ",", "j", ",", "M"}], "}"}], 
+    ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"MDense", " ", "=", " ", 
+      RowBox[{
+       RowBox[{"-", "V"}], "*", "\[Pi]", "*", 
+       FractionBox["1", 
+        RowBox[{"2", "*", 
+         SuperscriptBox["L", "2"]}]], "*", 
+       RowBox[{"SparseArray", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"i_", ",", "j_"}], "}"}], "\[Rule]", 
+          RowBox[{
+           RowBox[{"R", "[", 
+            RowBox[{
+             RowBox[{"kx", "[", 
+              RowBox[{"j", ",", "p"}], "]"}], "-", 
+             RowBox[{"kx", "[", 
+              RowBox[{"i", ",", "p"}], "]"}]}], "]"}], "*", 
+           RowBox[{"R", "[", 
+            RowBox[{
+             RowBox[{"ky", "[", 
+              RowBox[{"j", ",", "p"}], "]"}], "-", 
+             RowBox[{"ky", "[", 
+              RowBox[{"i", ",", "p"}], "]"}]}], "]"}]}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           SuperscriptBox["p", "2"], ",", 
+           SuperscriptBox["p", "2"]}], "}"}], ",", "0"}], "]"}]}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"MDiag", " ", "=", 
+      RowBox[{"SparseArray", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"i_", ",", "i_"}], "}"}], "\[Rule]", 
+         RowBox[{
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{"2", "*", 
+             FractionBox["\[Pi]", "L"]}], ")"}], "2"], 
+          FractionBox[
+           RowBox[{"(", 
+            RowBox[{
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{"kx", "[", 
+                RowBox[{"i", ",", "p"}], "]"}], ")"}], "2"], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{"ky", "[", 
+                RowBox[{"i", ",", "p"}], "]"}], ")"}], "2"]}], ")"}], 
+           "2"]}]}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          SuperscriptBox["p", "2"], ",", 
+          SuperscriptBox["p", "2"]}], "}"}], ",", "0"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"M", " ", "=", " ", 
+      RowBox[{"MDense", "+", "MDiag"}]}]}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.5721264025298862`*^9, 3.57212640281525*^9}}],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{"Now", ",", " ", 
+   RowBox[{"build", " ", "the", " ", "2", "D", " ", "equivalent"}], ",", " ", 
+   
+   RowBox[{"and", " ", "test", " ", "it"}]}], "*)"}]], "Input",
+ CellChangeTimes->{{3.57212652607777*^9, 3.5721265369778976`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"BuildPlaneMatrix2D1Well", "[", 
+   RowBox[{"V_", ",", "L_", ",", "p_"}], "]"}], ":=", " ", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"MDense", ",", "MDiag", ",", "i", ",", "j", ",", "M"}], "}"}], 
+    ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"MDense", " ", "=", " ", 
+      RowBox[{
+       RowBox[{"-", "V"}], "*", "\[Pi]", "*", 
+       FractionBox["1", 
+        RowBox[{"2", "*", 
+         SuperscriptBox["L", "2"]}]], "*", 
+       RowBox[{"SparseArray", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"i_", ",", "j_"}], "}"}], "\[Rule]", 
+          RowBox[{
+           RowBox[{"R", "[", 
+            RowBox[{
+             RowBox[{"kx", "[", 
+              RowBox[{"j", ",", "p"}], "]"}], "-", 
+             RowBox[{"kx", "[", 
+              RowBox[{"i", ",", "p"}], "]"}]}], "]"}], "*", 
+           RowBox[{"R", "[", 
+            RowBox[{
+             RowBox[{"ky", "[", 
+              RowBox[{"j", ",", "p"}], "]"}], "-", 
+             RowBox[{"ky", "[", 
+              RowBox[{"i", ",", "p"}], "]"}]}], "]"}]}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           SuperscriptBox["p", "2"], ",", 
+           SuperscriptBox["p", "2"]}], "}"}], ",", "0"}], "]"}]}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"MDiag", " ", "=", 
+      RowBox[{"SparseArray", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"i_", ",", "i_"}], "}"}], "\[Rule]", 
+         RowBox[{
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{"2", "*", 
+             FractionBox["\[Pi]", "L"]}], ")"}], "2"], 
+          FractionBox[
+           RowBox[{"(", 
+            RowBox[{
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{"kx", "[", 
+                RowBox[{"i", ",", "p"}], "]"}], ")"}], "2"], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{"ky", "[", 
+                RowBox[{"i", ",", "p"}], "]"}], ")"}], "2"]}], ")"}], 
+           "2"]}]}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          SuperscriptBox["p", "2"], ",", 
+          SuperscriptBox["p", "2"]}], "}"}], ",", "0"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"M", " ", "=", " ", 
+      RowBox[{"MDense", "+", "MDiag"}]}]}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.572126557137423*^9, 3.572126558653471*^9}}]
+}, Open  ]]
+},
+WindowSize->{740, 867},
+WindowMargins->{{Automatic, 302}, {Automatic, 119}},
+FrontEndVersion->"9.0 for Linux x86 (64-bit) (November 20, 2012)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[557, 20, 319, 7, 73, "Text"],
+Cell[879, 29, 104, 4, 117, "Section"],
+Cell[CellGroupData[{
+Cell[1008, 37, 95, 1, 51, "Section"],
+Cell[1106, 40, 486, 17, 69, "Input"],
+Cell[CellGroupData[{
+Cell[1617, 61, 183, 5, 32, "Input"],
+Cell[1803, 68, 135, 3, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1975, 76, 904, 26, 126, "Input"],
+Cell[2882, 104, 211, 6, 55, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3130, 115, 278, 9, 56, "Input"],
+Cell[3411, 126, 235, 7, 55, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3683, 138, 278, 9, 56, "Input"],
+Cell[3964, 149, 228, 7, 55, "Output"]
+}, Open  ]],
+Cell[4207, 159, 2472, 70, 321, "Input"],
+Cell[6682, 231, 276, 6, 32, "Input"],
+Cell[6961, 239, 2478, 70, 343, "Input"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+
